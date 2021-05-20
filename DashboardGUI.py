@@ -6,7 +6,6 @@ from tkinter import messagebox
 class DashboardGUI:
     def __init__(self, frame):
         self.dashboard_cont_frame = frame
-        self.dashboard_cont_frame.place(x=20, y=100, width=900, height=570)
 
         self.student_count = Label(self.dashboard_cont_frame, text="None", font=("Merriweather", 24))
         self.student_count.place(x=20, y=20, width=250, height=120)
@@ -15,14 +14,14 @@ class DashboardGUI:
         self.course_count.place(x=290, y=20, width=250, height=120)
 
         stud_list_label = Label(self.dashboard_cont_frame, bg="#A51d23", fg="white",
-                                text="  List of Students", font=("Bebas Neue", 15), anchor="w")
+                                text="  LIST OF STUDENTS", font=("Blinker", 15, "bold"), anchor="w")
         self.stud_list_frame = Frame(self.dashboard_cont_frame, bg="white", highlightbackground="#A51d23",
                                      highlightthickness=2)
         stud_list_label.place(x=10, y=190, width=550, height=30)
         self.stud_list_frame.place(x=10, y=220, width=550, height=320)
 
         course_list_label = Label(self.dashboard_cont_frame, bg="#A51d23", fg="white",
-                                  text="  List of Courses", font=("Bebas Neue", 15), anchor="w")
+                                  text="  LIST OF COURSES", font=("Blinker", 15, "bold"), anchor="w")
         self.course_list_frame = Frame(self.dashboard_cont_frame, bg="white", highlightbackground="#A51d23",
                                        highlightthickness=2)
         course_list_label.place(x=580, y=190, width=300, height=30)
