@@ -1,17 +1,25 @@
 from tkinter import *
 from tkinter import ttk
-from tkinter import messagebox
 
 
 class DashboardGUI:
     def __init__(self, frame):
         self.dashboard_cont_frame = frame
+        self.student_dshbrd_img = PhotoImage(file=r"dashboardstud.png")
+        student_count_dash = Label(self.dashboard_cont_frame, image=self.student_dshbrd_img)
+        student_count_dash.photo = self.student_dshbrd_img
+        student_count_dash.place(x=20, y=20, width=250, height=120)
+        self.student_count = Label(self.dashboard_cont_frame, text="1000", font=("Blinker", 30, "bold"),
+                                   fg="#A51d23", bg="#FA9412")
+        self.student_count.place(x=20, y=20, width=140, height=77)
 
-        self.student_count = Label(self.dashboard_cont_frame, text="None", font=("Merriweather", 24))
-        self.student_count.place(x=20, y=20, width=250, height=120)
-
-        self.course_count = Label(self.dashboard_cont_frame, text="None", font=("Merriweather", 24))
-        self.course_count.place(x=290, y=20, width=250, height=120)
+        self.course_dshbrd_img = PhotoImage(file=r"dashboardcourse.png")
+        course_count_dash = Label(self.dashboard_cont_frame, image=self.course_dshbrd_img)
+        course_count_dash.photo = self.course_dshbrd_img
+        course_count_dash.place(x=290, y=20, width=250, height=120)
+        self.course_count = Label(self.dashboard_cont_frame, text="0", font=("Blinker", 30, "bold"),
+                                  bg="#A51d23", fg="#FA9412")
+        self.course_count.place(x=290, y=20, width=140, height=77)
 
         stud_list_label = Label(self.dashboard_cont_frame, bg="#A51d23", fg="white",
                                 text="  LIST OF STUDENTS", font=("Blinker", 15, "bold"), anchor="w")

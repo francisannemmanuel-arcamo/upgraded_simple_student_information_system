@@ -36,22 +36,22 @@ class SISGUIApp:
         self.course_img = PhotoImage(file=r"courseimg.png")
         self.about_img = PhotoImage(file=r"aboutimg.png")
 
-        dashbrd_nav_button = Button(self.nav_frame, command=self.dashboard_frame_gui, relief=GROOVE,
+        dashbrd_nav_button = Button(self.nav_frame, command=self.dashboard_frame_gui, relief=FLAT,
                                     activebackground="#A51d23", activeforeground="white", fg="#FA9412", bg="#A51d23",
                                     image=self.dashboard_img, text="   Dashboard",
                                     font=("Blinker", 17, "bold"), anchor="w", compound="left")
         dashbrd_nav_button.place(x=0, y=200, width=260, height=50)
-        stud_nav_button = Button(self.nav_frame, command=self.student_frame_gui, relief=GROOVE,
+        stud_nav_button = Button(self.nav_frame, command=self.student_frame_gui, relief=FLAT,
                                  activebackground="#A51d23", activeforeground="white", fg="#FA9412", bg="#A51d23",
                                  image=self.student_img, text="   Students",
                                  font=("Blinker", 17, "bold"), anchor="w", compound="left")
         stud_nav_button.place(x=0, y=250, width=260, height=50)
-        course_nav_button = Button(self.nav_frame, command=self.courses_frame_gui, relief=GROOVE,
+        course_nav_button = Button(self.nav_frame, command=self.courses_frame_gui, relief=FLAT,
                                    activebackground="#A51d23", activeforeground="white", fg="#FA9412", bg="#A51d23",
                                    image=self.course_img, text="   Courses",
                                    font=("Blinker", 17, "bold"), anchor="w", compound="left")
         course_nav_button.place(x=0, y=300, width=260, height=50)
-        about_nav_button = Button(self.nav_frame, command=self.about_frame_gui, relief=GROOVE,
+        about_nav_button = Button(self.nav_frame, command=self.about_frame_gui, relief=FLAT,
                                   activebackground="#A51d23", activeforeground="white", fg="#FA9412", bg="#A51d23",
                                   image=self.about_img, text="   About",
                                   font=("Blinker", 17, "bold"), anchor="w", compound="left")

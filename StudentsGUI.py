@@ -2,13 +2,20 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 
+from AddStudent import AddStudent
+from EditStudent import EditStudent
+
 
 class StudentGUI:
     def __init__(self, frame):
         self.student_cont_frame = frame
 
-        self.stud_count = Label(self.student_cont_frame, text="No. of Students", font=("Blinker", 15))
-        self.stud_count.place(x=595, y=10, width=250, height=40)
+        stud_count_label = Label(self.student_cont_frame, text="No. of Students: ", font=("Blinker", 14),
+                                 bg="white", fg="black", anchor='w')
+        self.stud_count = Label(self.student_cont_frame, text="0", font=("Blinker", 18, "bold"),
+                                bg="white", fg="#A51d23", anchor='w')
+        stud_count_label.place(x=595, y=10, width=130, height=40)
+        self.stud_count.place(x=735, y=8, width=70, height=40)
 
         self.add_button_img = PhotoImage(file=r"addstudent.png").subsample(1, 1)
         self.edit_button_img = PhotoImage(file=r"editstudent.png").subsample(1, 1)
@@ -79,26 +86,64 @@ class StudentGUI:
         self.student_table.pack(fill=BOTH, expand=1)
 
         self.heading_label = Label(self.student_cont_frame, bg="#A51d23", fg="white", anchor='w',
-                                   text="  FEATURES", font=("Blinker", 15, "bold"))
+                                   font=("Blinker", 15, "bold"))
         self.heading_label.place(x=10, y=140, width=340, height=30)
 
-        self.addstudentframe = Frame(self.student_cont_frame, bg="white", highlightbackground="#A51d23",
-                                     highlightthickness=2)
+        self.features_frame = Frame(self.student_cont_frame, bg="white", highlightbackground="#A51d23",
+                                    highlightthickness=2)
+        self.add_student_frame = Frame(self.student_cont_frame, bg="white", highlightbackground="#A51d23",
+                                       highlightthickness=2)
+        self.edit_student_frame = Frame(self.student_cont_frame, bg="white", highlightbackground="#A51d23",
+                                        highlightthickness=2)
+
+        self.default_layout()
+
+    def default_layout(self):
+        self.heading_label.config(text="  FEATURES")
+        self.hide_widgets()
+        self.features_frame.place(x=10, y=170, width=340, height=370)
+
+        add_button_nav = Button(self.features_frame, command=self.add_student,
+                                activebackground="#A51d23", fg="white", activeforeground="#FA9412", bg="#A51d23",
+                                text=" ADD STUDENT", image=self.add_button_img, compound="left", anchor="w",
+                                font=("Blinker", 20, "bold")
+                                )
+        add_button_nav.place(x=20, y=40, width=290, height=70)
+        edit_button_nav = Button(self.features_frame, font=("Blinker", 20, "bold"), command=self.edit_student,
+                                 activebackground="#A51d23", fg="white", activeforeground="#FA9412", bg="#A51d23",
+                                 text=" EDIT STUDENT", image=self.edit_button_img, compound="left", anchor="w",
+                                 )
+        edit_button_nav.place(x=20, y=120, width=290, height=70)
+        delete_button_nav = Button(self.features_frame, command=self.delete_student,
+                                   activebackground="#A51d23", fg="white", activeforeground="#FA9412", bg="#A51d23",
+                                   text=" DELETE STUDENT", image=self.delete_button_img, compound="left", anchor="w",
+                                   font=("Blinker", 20, "bold")
+                                   )
+        delete_button_nav.place(x=20, y=200, width=290, height=70)
+
+    def hide_widgets(self):
+        self.features_frame.place_forget()
+        self.add_student_frame.place_forget()
+        self.edit_student_frame.place_forget()
 
     def add_student(self):
         self.heading_label.config(text="  ADD STUDENT")
-        print("Student Added")
+        self.hide_widgets()
+        self.add_student_frame.place(x=10, y=170, width=340, height=370)
+        AddStudent(self.add_student_frame)
 
     def edit_student(self):
         self.heading_label.config(text="  EDIT STUDENT")
-        print("Student Edited")
+        self.hide_widgets()
+        self.edit_student_frame.place(x=10, y=170, width=340, height=370)
+        EditStudent(self.edit_student_frame)
 
     def delete_student(self):
-        print("")
+        print("Delete Student")
 
     def search_student(self):
         if len(self.search_student_bar_entry.get()) == 0:
-            messagebox.showerror("Error", "Please enter student id")
+            messagebox.showerror("Search Error", "Please enter student id")
         else:
             print(self.search_student_bar_entry.get())
 

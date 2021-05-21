@@ -2,13 +2,20 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 
+from AddCourse import AddCourse
+from EditCourse import EditCourse
+
 
 class CoursesGUI:
     def __init__(self, frame):
         self.courses_cont_frame = frame
 
-        self.course_count = Label(self.courses_cont_frame, text="None", font=("Blinker", 15))
-        self.course_count.place(x=595, y=10, width=250, height=40)
+        course_count_label = Label(self.courses_cont_frame, text="No. of Courses: ", font=("Blinker", 14),
+                                   bg="white", fg="black", anchor='w')
+        self.course_count = Label(self.courses_cont_frame, text="0", font=("Blinker", 18, "bold"),
+                                  bg="white", fg="#A51d23", anchor='w')
+        course_count_label.place(x=595, y=10, width=120, height=40)
+        self.course_count.place(x=725, y=8, width=70, height=40)
 
         self.add_button_img = PhotoImage(file=r"addcourse.png").subsample(1, 1)
         self.edit_button_img = PhotoImage(file=r"editcourse.png").subsample(1, 1)
@@ -72,28 +79,66 @@ class CoursesGUI:
         self.course_table.pack(fill=BOTH, expand=1)
 
         self.heading_label = Label(self.courses_cont_frame, bg="#A51d23", fg="white", anchor='w',
-                                   text="  FEATURES", font=("Blinker", 15, "bold"))
+                                   text="", font=("Blinker", 15, "bold"))
         self.heading_label.place(x=10, y=140, width=340, height=30)
 
+        self.features_frame = Frame(self.courses_cont_frame, bg="white", highlightbackground="#A51d23",
+                                    highlightthickness=2)
         self.add_course_frame = Frame(self.courses_cont_frame, bg="white", highlightbackground="#A51d23",
                                       highlightthickness=2)
+        self.edit_course_frame = Frame(self.courses_cont_frame, bg="white", highlightbackground="#A51d23",
+                                       highlightthickness=2)
+
+        self.default_layout()
+
+    def default_layout(self):
+        self.heading_label.config(text="   FEATURES")
+        self.hide_widgets()
+        self.features_frame.place(x=10, y=170, width=340, height=370)
+
+        add_button_nav = Button(self.features_frame, command=self.add_course,
+                                activebackground="#A51d23", fg="white", activeforeground="#FA9412", bg="#A51d23",
+                                text=" ADD COURSE", image=self.add_button_img, compound="left", anchor="w",
+                                font=("Blinker", 20, "bold")
+                                )
+        add_button_nav.place(x=20, y=40, width=290, height=70)
+        edit_button_nav = Button(self.features_frame, font=("Blinker", 20, "bold"), command=self.edit_course,
+                                 activebackground="#A51d23", fg="white", activeforeground="#FA9412", bg="#A51d23",
+                                 text=" EDIT COURSE", image=self.edit_button_img, compound="left", anchor="w",
+                                 )
+        edit_button_nav.place(x=20, y=120, width=290, height=70)
+        delete_button_nav = Button(self.features_frame, command=self.delete_course,
+                                   activebackground="#A51d23", fg="white", activeforeground="#FA9412", bg="#A51d23",
+                                   text=" DELETE COURSE", image=self.delete_button_img, compound="left", anchor="w",
+                                   font=("Blinker", 20, "bold")
+                                   )
+        delete_button_nav.place(x=20, y=200, width=290, height=70)
+
+    def hide_widgets(self):
+        self.features_frame.place_forget()
+        self.add_course_frame.place_forget()
+        self.edit_course_frame.place_forget()
 
     def add_course(self):
         self.heading_label.config(text="  ADD COURSE")
-        print("Course added")
+        self.hide_widgets()
+        self.add_course_frame.place(x=10, y=170, width=340, height=370)
+        AddCourse(self.add_course_frame)
 
     def edit_course(self):
         self.heading_label.config(text="  EDIT COURSE")
-        print("Course edited")
+        self.hide_widgets()
+        self.edit_course_frame.place(x=10, y=170, width=340, height=370)
+        EditCourse(self.edit_course_frame)
 
     def delete_course(self):
         print("Course deleted")
 
     def search_course(self):
         if len(self.search_course_bar_entry.get()) == 0:
-            messagebox.showerror("Error", "Please enter course id")
+            messagebox.showerror("Search Error", "Please enter course id")
         else:
             print(self.search_course_bar_entry.get())
 
     def refresh_search(self):
-        self.search_student_bar_entry.delete(0, END)
+        self.search_course_bar_entry.delete(0, END)
