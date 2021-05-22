@@ -54,7 +54,7 @@ class AddStudent:
         gender_label.place(x=10, y=215, width=80, height=35)
         self.add_gender_combo.place(x=90, y=215, width=235, height=35)
 
-        add_info_button = Button(self.add_student_frame, command='', text="ADD",
+        add_info_button = Button(self.add_student_frame, command=self.add_student, text="ADD",
                                  bg="#A51d23", fg="white", activebackground="#A51d23", activeforeground="#FA9412",
                                  font=("Bebas Neue", 15))
         add_info_button.place(x=175, y=300, width=70, height=30)
@@ -63,9 +63,30 @@ class AddStudent:
                                    font=("Bebas Neue", 15))
         clear_info_button.place(x=255, y=300, width=70, height=30)
 
-        def clear_data(self):
-            self.add_id_entry.delete(0, END)
-            self.add_name_entry.delete(0, END)
-            self.add_course_id_entry.delete(0, END)
-            self.add_year_combo.delete(0, END)
-            self.add_gender_combo.delete(0, END)
+    def clear_data(self):
+        self.add_id_entry.delete(0, END)
+        self.add_name_entry.delete(0, END)
+        self.add_course_id_entry.delete(0, END)
+        self.add_year_combo.delete(0, END)
+        self.add_gender_combo.delete(0, END)
+
+    def add_student(self):
+        if messagebox.askyesno("Add Student", "Do you want to add the student in the database"):
+            if self.name.get() == "" or self.id_no.get() == "" or self.year == "" or self.course.get() == "" \
+                    or self.gender.get() == "":
+                messagebox.showerror("Error", "Please fill out all fields")
+                return
+            elif not self.id_checker():
+                messagebox.showerror("Error", "Invalid ID Number")
+                return
+            else:
+                messagebox.showinfo("Success", "Student added to database")
+                self.clear_data()
+                return
+
+    def id_checker(self):
+        id_num = self.id_no.get()
+        if len(id_num) != 9 or id_num[4] != '-' or not id_num.replace("-", "").isdigit():
+            return False
+        else:
+            return True

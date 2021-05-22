@@ -1,11 +1,15 @@
 from tkinter import *
-from tkinter import ttk
 from tkinter import messagebox
+import SISdatabase
+
+import displaytable
 
 
 class AddCourse:
-    def __init__(self, frame):
+    def __init__(self, frame, table):
+
         self.add_course_frame = frame
+        self.course_table = table
 
         self.course_id = StringVar()
 
@@ -23,7 +27,7 @@ class AddCourse:
         course_label.place(x=10, y=100, width=80, height=35)
         self.add_course_text.place(x=10, y=135, width=315, height=125)
 
-        add_info_button = Button(self.add_course_frame, command='', text="ADD",
+        add_info_button = Button(self.add_course_frame, command=self.add_course, text="ADD",
                                  bg="#A51d23", fg="white", activebackground="#A51d23", activeforeground="#FA9412",
                                  font=("Bebas Neue", 15))
         add_info_button.place(x=175, y=300, width=70, height=30)
@@ -32,6 +36,26 @@ class AddCourse:
                                    font=("Bebas Neue", 15))
         clear_info_button.place(x=255, y=300, width=70, height=30)
 
+        displaytable.display_course_table(self.course_table)
+
     def clear_data(self):
         self.add_course_id_entry.delete(0, END)
         self.add_course_text.delete(1.0, END)
+
+    def add_course(self):
+        if self.add_course_id_entry.get() == "" or self.add_course_text.get(1.0, END) == "":
+            messagebox.showerror("Error", "Please fill all fields")
+            return
+
+        else:
+            msg = messagebox.askquestion("Add Course", "Do you wish to add the course to database?")
+            if msg == 'yes':
+                if SISdatabase.add_course_rec(self.course_id.get().upper(),
+                                              self.add_course_text.get(1.0, END).upper().replace("\n", "")):
+                    self.clear_data()
+                    messagebox.showinfo("Success", "Course added to database.")
+                    displaytable.display_course_table(self.course_table)
+                else:
+                    return
+            else:
+                return

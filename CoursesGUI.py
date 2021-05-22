@@ -1,21 +1,18 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
+import SISdatabase
 
 from AddCourse import AddCourse
 from EditCourse import EditCourse
+import displaytable as disp
 
 
 class CoursesGUI:
     def __init__(self, frame):
         self.courses_cont_frame = frame
 
-        course_count_label = Label(self.courses_cont_frame, text="No. of Courses: ", font=("Blinker", 14),
-                                   bg="white", fg="black", anchor='w')
-        self.course_count = Label(self.courses_cont_frame, text="0", font=("Blinker", 18, "bold"),
-                                  bg="white", fg="#A51d23", anchor='w')
-        course_count_label.place(x=595, y=10, width=120, height=40)
-        self.course_count.place(x=725, y=8, width=70, height=40)
+        self.search_course_id = StringVar()
 
         self.add_button_img = PhotoImage(file=r"addcourse.png").subsample(1, 1)
         self.edit_button_img = PhotoImage(file=r"editcourse.png").subsample(1, 1)
@@ -38,7 +35,8 @@ class CoursesGUI:
         delete_course_btn.photo = self.delete_button_img
         delete_course_btn.place(x=160, y=50, width=70, height=70)
 
-        self.search_course_bar_entry = Entry(self.courses_cont_frame, font=("Oswald", 14), highlightthickness=2,
+        self.search_course_bar_entry = Entry(self.courses_cont_frame, textvariable=self.search_course_id,
+                                             font=("Oswald", 14), highlightthickness=2,
                                              highlightbackground="#A51d23")
         self.search_course_bar_entry.place(x=595, y=85, width=200, height=35)
         search_course_btn = Button(self.courses_cont_frame, bg="#A51d23", fg="white", font=("Bebas Neue", 20),
@@ -90,6 +88,7 @@ class CoursesGUI:
                                        highlightthickness=2)
 
         self.default_layout()
+        disp.display_course_table(self.course_table)
 
     def default_layout(self):
         self.heading_label.config(text="   FEATURES")
@@ -123,22 +122,42 @@ class CoursesGUI:
         self.heading_label.config(text="  ADD COURSE")
         self.hide_widgets()
         self.add_course_frame.place(x=10, y=170, width=340, height=370)
-        AddCourse(self.add_course_frame)
+        AddCourse(self.add_course_frame, self.course_table)
 
     def edit_course(self):
         self.heading_label.config(text="  EDIT COURSE")
         self.hide_widgets()
         self.edit_course_frame.place(x=10, y=170, width=340, height=370)
-        EditCourse(self.edit_course_frame)
+        EditCourse(self.edit_course_frame, self.course_table)
 
     def delete_course(self):
-        print("Course deleted")
+        cursor_row = self.course_table.focus()
+        contents = self.course_table.item(cursor_row)
+        rows = contents['values']
+        if rows == "":
+            messagebox.showerror("Error", "Select course first")
+            return
+        else:
+            if messagebox.askyesno("Delete Course", "Do you wish to delete this course?"):
+                SISdatabase.delete_course_rec(rows[0])
+                disp.display_course_table(self.course_table)
+                messagebox.showinfo("Success", "Course deleted in database")
+                return
+            else:
+                return
 
     def search_course(self):
         if len(self.search_course_bar_entry.get()) == 0:
             messagebox.showerror("Search Error", "Please enter course id")
         else:
-            print(self.search_course_bar_entry.get())
+            result = SISdatabase.search_course_rec(self.search_course_id.get().upper())
+            self.course_table.delete(*self.course_table.get_children())
+            if not result:
+                messagebox.showwarning("Search Result", "No records found")
+            else:
+                for x in result:
+                    self.course_table.insert('', 0, values=(x[0], x[1]))
 
     def refresh_search(self):
         self.search_course_bar_entry.delete(0, END)
+        disp.display_course_table(self.course_table)

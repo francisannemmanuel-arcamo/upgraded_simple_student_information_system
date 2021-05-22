@@ -4,6 +4,8 @@ from tkinter import messagebox
 
 from AddStudent import AddStudent
 from EditStudent import EditStudent
+import displaytable as disp
+import SISdatabase
 
 
 class StudentGUI:
@@ -97,6 +99,7 @@ class StudentGUI:
                                         highlightthickness=2)
 
         self.default_layout()
+        disp.display_student_table(self.student_table)
 
     def default_layout(self):
         self.heading_label.config(text="  FEATURES")
@@ -149,3 +152,4 @@ class StudentGUI:
 
     def refresh_search(self):
         self.search_student_bar_entry.delete(0, END)
+

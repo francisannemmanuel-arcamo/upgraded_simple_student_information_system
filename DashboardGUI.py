@@ -1,15 +1,21 @@
 from tkinter import *
 from tkinter import ttk
 
+import displaytable as disp
+import SISdatabase
+
 
 class DashboardGUI:
     def __init__(self, frame):
         self.dashboard_cont_frame = frame
+        SISdatabase.student_data()
+        SISdatabase.course_data()
+
         self.student_dshbrd_img = PhotoImage(file=r"dashboardstud.png")
         student_count_dash = Label(self.dashboard_cont_frame, image=self.student_dshbrd_img)
         student_count_dash.photo = self.student_dshbrd_img
         student_count_dash.place(x=20, y=20, width=250, height=120)
-        self.student_count = Label(self.dashboard_cont_frame, text="1000", font=("Blinker", 30, "bold"),
+        self.student_count = Label(self.dashboard_cont_frame, text="1000", font=("Blinker", 40, "bold"),
                                    fg="#A51d23", bg="#FA9412")
         self.student_count.place(x=20, y=20, width=140, height=77)
 
@@ -17,7 +23,7 @@ class DashboardGUI:
         course_count_dash = Label(self.dashboard_cont_frame, image=self.course_dshbrd_img)
         course_count_dash.photo = self.course_dshbrd_img
         course_count_dash.place(x=290, y=20, width=250, height=120)
-        self.course_count = Label(self.dashboard_cont_frame, text="0", font=("Blinker", 30, "bold"),
+        self.course_count = Label(self.dashboard_cont_frame, text="0", font=("Blinker", 40, "bold"),
                                   bg="#A51d23", fg="#FA9412")
         self.course_count.place(x=290, y=20, width=140, height=77)
 
@@ -76,3 +82,11 @@ class DashboardGUI:
         self.course_table.column("course", width=100)
 
         self.course_table.pack(fill=BOTH, expand=1)
+
+        self.count_data()
+        disp.display_student_table(self.student_table)
+        disp.display_course_table(self.course_table)
+
+    def count_data(self):
+        self.student_count.config(text=len(SISdatabase.view_student_rec()))
+        self.course_count.config(text=len(SISdatabase.view_course_rec()))
