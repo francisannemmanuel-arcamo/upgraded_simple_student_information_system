@@ -35,6 +35,9 @@ class CoursesGUI:
         delete_course_btn.photo = self.delete_button_img
         delete_course_btn.place(x=160, y=50, width=70, height=70)
 
+        search_code_label = Label(self.courses_cont_frame, font=("Blinker", 11, "bold"), bg="#A51d23", fg="white",
+                                  text="Course ID:")
+        search_code_label.place(x=515, y=85, width=80, height=35)
         self.search_course_bar_entry = Entry(self.courses_cont_frame, textvariable=self.search_course_id,
                                              font=("Blinker", 15, "bold"), highlightthickness=2,
                                              highlightbackground="#A51d23")
@@ -132,10 +135,11 @@ class CoursesGUI:
             messagebox.showerror("Error", "Select course first")
             return
         else:
-            if messagebox.askyesno("Delete Course", "Do you wish to delete this course?"):
-                SISdatabase.delete_course_rec(rows[0])
-                disp.display_course_table(self.course_table)
-                messagebox.showinfo("Success", "Course deleted in database")
+            if messagebox.askyesno("Delete Course", "Do you wish to delete this course? Some students might be enrolled"
+                                                    " in this course."):
+                if SISdatabase.delete_course_rec(rows[0]):
+                    disp.display_course_table(self.course_table)
+                    messagebox.showinfo("Success", "Course deleted in database")
                 return
             else:
                 return

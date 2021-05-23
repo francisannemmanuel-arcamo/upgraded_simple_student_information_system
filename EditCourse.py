@@ -45,7 +45,8 @@ class EditCourse:
             messagebox.showerror("Error", "Please fill all fields")
             return
         else:
-            if messagebox.askyesno("Update Course", "Do you wish to update the course information?"):
+            if messagebox.askyesno("Update Course", "Do you wish to update the course information? Some students might"
+                                                    "be enrolled in this course?"):
                 if SISdatabase.update_course_rec(self.rows[0], self.course_id.get().upper(),
                                                  self.edit_course_text.get(1.0, END).upper().replace("\n", "")):
                     messagebox.showinfo("Success", "Information on course has been updated!")

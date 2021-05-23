@@ -35,6 +35,9 @@ class StudentGUI:
         delete_student_btn.photo = self.delete_button_img
         delete_student_btn.place(x=160, y=50, width=70, height=70)
 
+        search_code_label = Label(self.student_cont_frame, font=("Blinker", 11, "bold"), bg="#A51d23", fg="white",
+                                  text="Student ID:")
+        search_code_label.place(x=515, y=85, width=80, height=35)
         self.search_student_bar_entry = Entry(self.student_cont_frame, textvariable=self.search_stud,
                                               font=("Blinker", 15, "bold"), highlightthickness=2,
                                               highlightbackground="#A51d23")
@@ -154,4 +157,4 @@ class StudentGUI:
             return
         else:
             for x in result:
-                self.student_table.insert('', 0, values=(x[0], x[1], x[2], x[3], x[4]))
+                self.student_table.insert('', 0, values=(x[0], x[1], x[3], x[2], x[4]))
