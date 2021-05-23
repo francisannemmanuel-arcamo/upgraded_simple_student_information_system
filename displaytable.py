@@ -1,4 +1,3 @@
-import mysql.connector
 import SISdatabase
 
 
@@ -13,4 +12,4 @@ def display_student_table(student_table):
     student_table.delete(*student_table.get_children())
     student_data = SISdatabase.view_student_rec()
     for x in student_data:
-        student_table.insert('', 0, values=(x[0], x[1], x[2], x[3], x[4]))
+        student_table.insert('', 0, values=(x[0], x[1], x[3], x[2], x[4]))

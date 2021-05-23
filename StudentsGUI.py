@@ -12,12 +12,7 @@ class StudentGUI:
     def __init__(self, frame):
         self.student_cont_frame = frame
 
-        stud_count_label = Label(self.student_cont_frame, text="No. of Students: ", font=("Blinker", 14),
-                                 bg="white", fg="black", anchor='w')
-        self.stud_count = Label(self.student_cont_frame, text="0", font=("Blinker", 18, "bold"),
-                                bg="white", fg="#A51d23", anchor='w')
-        stud_count_label.place(x=595, y=10, width=130, height=40)
-        self.stud_count.place(x=735, y=8, width=70, height=40)
+        self.search_stud = StringVar()
 
         self.add_button_img = PhotoImage(file=r"addstudent.png").subsample(1, 1)
         self.edit_button_img = PhotoImage(file=r"editstudent.png").subsample(1, 1)
@@ -40,8 +35,8 @@ class StudentGUI:
         delete_student_btn.photo = self.delete_button_img
         delete_student_btn.place(x=160, y=50, width=70, height=70)
 
-        self.search_student_bar_entry = Entry(self.student_cont_frame, font=("Oswald", 14), highlightthickness=2,
-                                              highlightbackground="#A51d23")
+        self.search_student_bar_entry = Entry(self.student_cont_frame, textvariable=self.search_stud,
+                                              font=("Blinker", 17, "bold"), highlightthickness=2, highlightbackground="#A51d23")
         self.search_student_bar_entry.place(x=595, y=85, width=200, height=35)
 
         search_student_btn = Button(self.student_cont_frame, bg="#A51d23", image=self.srch_btn_img,
@@ -133,23 +128,41 @@ class StudentGUI:
         self.heading_label.config(text="  ADD STUDENT")
         self.hide_widgets()
         self.add_student_frame.place(x=10, y=170, width=340, height=370)
-        AddStudent(self.add_student_frame)
+        AddStudent(self.add_student_frame, self.student_table)
 
     def edit_student(self):
         self.heading_label.config(text="  EDIT STUDENT")
         self.hide_widgets()
         self.edit_student_frame.place(x=10, y=170, width=340, height=370)
-        EditStudent(self.edit_student_frame)
+        EditStudent(self.edit_student_frame, self.student_table)
 
     def delete_student(self):
-        print("Delete Student")
+        cursor_row = self.student_table.focus()
+        contents = self.student_table.item(cursor_row)
+        rows = contents['values']
+        if rows == "":
+            messagebox.showerror("Error", "Select a student first!")
+        else:
+            if messagebox.askyesno("Delete Student", "Do you wish to delete this student?"):
+                SISdatabase.delete_student_rec(rows[0])
+                messagebox.showinfo("Success", "Student deleted in database!")
+                disp.display_student_table(self.student_table)
+                return
+            else:
+                return
 
     def search_student(self):
         if len(self.search_student_bar_entry.get()) == 0:
             messagebox.showerror("Search Error", "Please enter student id")
         else:
-            print(self.search_student_bar_entry.get())
+            result = SISdatabase.search_student_rec(self.search_stud.get().upper())
+            self.student_table.delete(*self.student_table.get_children())
+            if not result:
+                messagebox.showwarning("Search Result", "No records found")
+            else:
+                for x in result:
+                    self.student_table.insert('', 0, values=(x[0], x[1], x[2], x[3], x[4]))
 
     def refresh_search(self):
         self.search_student_bar_entry.delete(0, END)
-
+        disp.display_student_table(self.student_table)

@@ -4,10 +4,15 @@ from DashboardGUI import DashboardGUI
 from StudentsGUI import StudentGUI
 from CoursesGUI import CoursesGUI
 from AboutGUI import AboutGUI
+import SISdatabase
 
 
 class SISGUIApp:
     def __init__(self, frame):
+        # creates database table for students and courses
+        SISdatabase.student_data()
+        SISdatabase.course_data()
+
         self.frame = frame
         self.frame.title("Student Information System")
         self.frame.geometry("1200x680+63+8")

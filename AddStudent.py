@@ -2,10 +2,14 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 
+import SISdatabase
+import displaytable
+
 
 class AddStudent:
-    def __init__(self, frame):
+    def __init__(self, frame, table):
         self.add_student_frame = frame
+        self.student_table = table
 
         self.id_no = StringVar()
         self.name = StringVar()
@@ -72,21 +76,15 @@ class AddStudent:
 
     def add_student(self):
         if messagebox.askyesno("Add Student", "Do you want to add the student in the database"):
-            if self.name.get() == "" or self.id_no.get() == "" or self.year == "" or self.course.get() == "" \
-                    or self.gender.get() == "":
-                messagebox.showerror("Error", "Please fill out all fields")
-                return
-            elif not self.id_checker():
-                messagebox.showerror("Error", "Invalid ID Number")
+            if not SISdatabase.info_checker(self.id_no.get(), self.name.get().upper(), self.year.get(),
+                                            self.course.get().upper(), self.gender.get().upper()):
                 return
             else:
-                messagebox.showinfo("Success", "Student added to database")
-                self.clear_data()
-                return
-
-    def id_checker(self):
-        id_num = self.id_no.get()
-        if len(id_num) != 9 or id_num[4] != '-' or not id_num.replace("-", "").isdigit():
-            return False
-        else:
-            return True
+                if SISdatabase.add_student_rec(self.id_no.get(), self.name.get().upper(), self.year.get(),
+                                               self.course.get().upper(), self.gender.get().upper()):
+                    self.clear_data()
+                    messagebox.showinfo("Success", "Student added to database")
+                    displaytable.display_student_table(self.student_table)
+                    return
+                else:
+                    return

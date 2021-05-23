@@ -8,8 +8,6 @@ import SISdatabase
 class DashboardGUI:
     def __init__(self, frame):
         self.dashboard_cont_frame = frame
-        SISdatabase.student_data()
-        SISdatabase.course_data()
 
         self.student_dshbrd_img = PhotoImage(file=r"dashboardstud.png")
         student_count_dash = Label(self.dashboard_cont_frame, image=self.student_dshbrd_img)
@@ -79,7 +77,7 @@ class DashboardGUI:
         self.course_table.heading("course", text="Course")
         self.course_table['show'] = 'headings'
         self.course_table.column("course_code", width=50)
-        self.course_table.column("course", width=100)
+        self.course_table.column("course", width=200)
 
         self.course_table.pack(fill=BOTH, expand=1)
 

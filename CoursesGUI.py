@@ -36,7 +36,7 @@ class CoursesGUI:
         delete_course_btn.place(x=160, y=50, width=70, height=70)
 
         self.search_course_bar_entry = Entry(self.courses_cont_frame, textvariable=self.search_course_id,
-                                             font=("Oswald", 14), highlightthickness=2,
+                                             font=("Blinker", 17, "bold"), highlightthickness=2,
                                              highlightbackground="#A51d23")
         self.search_course_bar_entry.place(x=595, y=85, width=200, height=35)
         search_course_btn = Button(self.courses_cont_frame, bg="#A51d23", fg="white", font=("Bebas Neue", 20),

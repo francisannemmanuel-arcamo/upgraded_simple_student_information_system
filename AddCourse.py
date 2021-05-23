@@ -36,8 +36,6 @@ class AddCourse:
                                    font=("Bebas Neue", 15))
         clear_info_button.place(x=255, y=300, width=70, height=30)
 
-        displaytable.display_course_table(self.course_table)
-
     def clear_data(self):
         self.add_course_id_entry.delete(0, END)
         self.add_course_text.delete(1.0, END)
@@ -48,8 +46,7 @@ class AddCourse:
             return
 
         else:
-            msg = messagebox.askquestion("Add Course", "Do you wish to add the course to database?")
-            if msg == 'yes':
+            if messagebox.askyesno("Add Course", "Do you wish to add the course to database?"):
                 if SISdatabase.add_course_rec(self.course_id.get().upper(),
                                               self.add_course_text.get(1.0, END).upper().replace("\n", "")):
                     self.clear_data()

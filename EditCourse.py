@@ -37,7 +37,6 @@ class EditCourse:
                                    font=("Bebas Neue", 15))
         clear_info_button.place(x=255, y=300, width=70, height=30)
         self.course_table.bind("<ButtonRelease-1>", self.select_course)
-        disp.display_course_table(self.course_table)
 
     def update_course(self):
         if not self.rows:

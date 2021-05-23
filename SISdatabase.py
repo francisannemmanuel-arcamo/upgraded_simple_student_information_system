@@ -24,6 +24,20 @@ def course_data():
     con.close()
 
 
+def add_student_rec(studid, studname, studyear, studcourseid, studgender):
+    con = sqlite3.connect("csc.db")
+    cur = con.cursor()
+    try:
+        cur.execute("INSERT INTO studentdata VALUES(?, ?, ?, ?, ?)",
+                    (studid, studname, studyear, studcourseid, studgender))
+        con.commit()
+        con.close()
+        return True
+    except sqlite3.IntegrityError:
+        messagebox.showerror("Error", "Student ID already in database.")
+        return False
+
+
 def add_course_rec(course_id, course_name):
     con = sqlite3.connect("csc.db")
     cur = con.cursor()
@@ -55,12 +69,38 @@ def view_course_rec():
     return courses
 
 
+def delete_student_rec(studid):
+    con = sqlite3.connect("csc.db")
+    cur = con.cursor()
+    cur.execute("DELETE FROM studentdata WHERE stud_id=?", (studid,))
+    con.commit()
+    con.close()
+
+
 def delete_course_rec(course_id):
     con = sqlite3.connect("csc.db")
     cur = con.cursor()
     cur.execute("DELETE FROM coursedata WHERE course_id=?", (course_id,))
     con.commit()
     con.close()
+
+
+def update_student_rec(key, studid, studname, studyear, studcourseid, studgender):
+    con = sqlite3.connect("csc.db")
+    cur = con.cursor()
+    try:
+        if key != studid:
+            cur.execute("UPDATE studentdata SET stud_id=?, stud_name=?, stud_year=?, stud_course_id=?, stud_gender=? "
+                        "WHERE stud_id=?", (studid, studname, studyear, studcourseid, studgender, key))
+        else:
+            cur.execute("UPDATE studentdata SET stud_name=?, stud_year=?, stud_course_id=?, stud_gender=? "
+                        "WHERE stud_id=?", (studname, studyear, studcourseid, studgender, studid))
+        con.commit()
+        con.close()
+        return True
+    except sqlite3.IntegrityError:
+        messagebox.showerror("Error", "Student ID already in database.")
+        return False
 
 
 def update_course_rec(key, course_id, course_name):
@@ -80,6 +120,15 @@ def update_course_rec(key, course_id, course_name):
         return False
 
 
+def search_student_rec(student_id):
+    con = sqlite3.connect("csc.db")
+    cur = con.cursor()
+    cur.execute("SELECT * FROM studentdata WHERE stud_id=?", (student_id,))
+    result = cur.fetchall()
+    con.close()
+    return result
+
+
 def search_course_rec(course_id):
     con = sqlite3.connect("csc.db")
     cur = con.cursor()
@@ -87,3 +136,29 @@ def search_course_rec(course_id):
     result = cur.fetchall()
     con.close()
     return result
+
+
+def list_of_courses():
+    course_list = []
+    con = sqlite3.connect("csc.db")
+    cur = con.cursor()
+    cur.execute("SELECT course_id FROM coursedata")
+    result = cur.fetchall()
+    for x in result:
+        course_list.append(x[0])
+    con.close()
+    return course_list
+
+
+def info_checker(studid, name, year, courseid, gender):
+    if studid == "" or name == "" or year == "" or courseid == "" or gender == "":
+        messagebox.showerror("Error", "Please fill out all fields")
+        return False
+    elif len(studid) != 9 or studid[4] != '-' or not studid.replace("-", "").isdigit():
+        messagebox.showerror("Error", "Invalid ID Number")
+        return False
+    elif courseid not in list_of_courses():
+        messagebox.showerror("Error", "Course ID not in database")
+        return False
+    else:
+        return True
