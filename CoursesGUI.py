@@ -36,19 +36,13 @@ class CoursesGUI:
         delete_course_btn.place(x=160, y=50, width=70, height=70)
 
         self.search_course_bar_entry = Entry(self.courses_cont_frame, textvariable=self.search_course_id,
-                                             font=("Blinker", 17, "bold"), highlightthickness=2,
+                                             font=("Blinker", 15, "bold"), highlightthickness=2,
                                              highlightbackground="#A51d23")
-        self.search_course_bar_entry.place(x=595, y=85, width=200, height=35)
-        search_course_btn = Button(self.courses_cont_frame, bg="#A51d23", fg="white", font=("Bebas Neue", 20),
-                                   command=self.search_course,
-                                   image=self.srch_btn_img)
-        search_course_btn.photo = self.srch_btn_img
-        search_course_btn.place(x=795, y=85, width=35, height=35)
-
-        ref_search_btn = Button(self.courses_cont_frame, bg="#A51d23", image=self.refresh_btn_img,
-                                command=self.refresh_search)
-        ref_search_btn.photo = self.refresh_btn_img
-        ref_search_btn.place(x=835, y=85, width=35, height=35)
+        self.search_course_bar_entry.place(x=595, y=85, width=250, height=35)
+        self.search_course_id.trace("w", lambda name, index, mode, sv=self.search_course_id: self.search_course())
+        search_course_lbl = Label(self.courses_cont_frame, image=self.srch_btn_img)
+        search_course_lbl.photo = self.srch_btn_img
+        search_course_lbl.place(x=845, y=85, width=35, height=35)
 
         courselist_label = Label(self.courses_cont_frame, bg="#A51d23", fg="white",
                                  text="   LIST OF COURSES",
@@ -71,8 +65,8 @@ class CoursesGUI:
         self.course_table.heading("course_code", text="Course Code")
         self.course_table.heading("course", text="Course")
         self.course_table['show'] = 'headings'
-        self.course_table.column("course_code", width=40)
-        self.course_table.column("course", width=150)
+        self.course_table.column("course_code", width=120)
+        self.course_table.column("course", width=390)
 
         self.course_table.pack(fill=BOTH, expand=1)
 
@@ -147,17 +141,10 @@ class CoursesGUI:
                 return
 
     def search_course(self):
-        if len(self.search_course_bar_entry.get()) == 0:
-            messagebox.showerror("Search Error", "Please enter course id")
+        result = SISdatabase.search_course_rec(self.search_course_id.get().upper())
+        self.course_table.delete(*self.course_table.get_children())
+        if not result:
+            return
         else:
-            result = SISdatabase.search_course_rec(self.search_course_id.get().upper())
-            self.course_table.delete(*self.course_table.get_children())
-            if not result:
-                messagebox.showwarning("Search Result", "No records found")
-            else:
-                for x in result:
-                    self.course_table.insert('', 0, values=(x[0], x[1]))
-
-    def refresh_search(self):
-        self.search_course_bar_entry.delete(0, END)
-        disp.display_course_table(self.course_table)
+            for x in result:
+                self.course_table.insert('', 0, values=(x[0], x[1]))

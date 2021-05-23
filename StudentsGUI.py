@@ -36,18 +36,14 @@ class StudentGUI:
         delete_student_btn.place(x=160, y=50, width=70, height=70)
 
         self.search_student_bar_entry = Entry(self.student_cont_frame, textvariable=self.search_stud,
-                                              font=("Blinker", 17, "bold"), highlightthickness=2, highlightbackground="#A51d23")
-        self.search_student_bar_entry.place(x=595, y=85, width=200, height=35)
+                                              font=("Blinker", 15, "bold"), highlightthickness=2,
+                                              highlightbackground="#A51d23")
+        self.search_student_bar_entry.place(x=595, y=85, width=250, height=35)
+        self.search_stud.trace("w", lambda name, index, mode, sv=self.search_stud: self.search_student())
 
-        search_student_btn = Button(self.student_cont_frame, bg="#A51d23", image=self.srch_btn_img,
-                                    command=self.search_student)
-        search_student_btn.photo = self.srch_btn_img
-        search_student_btn.place(x=795, y=85, width=35, height=35)
-
-        ref_search_btn = Button(self.student_cont_frame, bg="#A51d23", image=self.refresh_btn_img,
-                                command=self.refresh_search)
-        ref_search_btn.photo = self.refresh_btn_img
-        ref_search_btn.place(x=835, y=85, width=35, height=35)
+        search_student_lbl = Label(self.student_cont_frame, image=self.srch_btn_img)
+        search_student_lbl.photo = self.srch_btn_img
+        search_student_lbl.place(x=845, y=85, width=35, height=35)
 
         self.stud_list_label = Label(self.student_cont_frame, bg="#A51d23", fg="white", anchor='w',
                                      text="   LIST OF STUDENTS", font=("Blinker", 15, "bold"))
@@ -152,17 +148,10 @@ class StudentGUI:
                 return
 
     def search_student(self):
-        if len(self.search_student_bar_entry.get()) == 0:
-            messagebox.showerror("Search Error", "Please enter student id")
+        result = SISdatabase.search_student_rec(self.search_stud.get().upper())
+        self.student_table.delete(*self.student_table.get_children())
+        if not result:
+            return
         else:
-            result = SISdatabase.search_student_rec(self.search_stud.get().upper())
-            self.student_table.delete(*self.student_table.get_children())
-            if not result:
-                messagebox.showwarning("Search Result", "No records found")
-            else:
-                for x in result:
-                    self.student_table.insert('', 0, values=(x[0], x[1], x[2], x[3], x[4]))
-
-    def refresh_search(self):
-        self.search_student_bar_entry.delete(0, END)
-        disp.display_student_table(self.student_table)
+            for x in result:
+                self.student_table.insert('', 0, values=(x[0], x[1], x[2], x[3], x[4]))
