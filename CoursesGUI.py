@@ -139,6 +139,7 @@ class CoursesGUI:
                 if SISdatabase.delete_course_rec(rows[0]):
                     disp.display_course_table(self.course_table)
                     messagebox.showinfo("Success", "Course deleted in database")
+                    self.default_layout()
                 return
             else:
                 return

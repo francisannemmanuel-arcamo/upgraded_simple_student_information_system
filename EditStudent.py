@@ -83,9 +83,10 @@ class EditStudent:
             if messagebox.askyesno("Update Course", "Do you wish to update the student information?"):
                 if SISdatabase.update_student_rec(self.rows[0], self.id_no.get(), self.name.get().upper(),
                                                   self.year.get(), self.course.get().upper(),
-                                                  self.gender.get().upper()):
+                                                  self.gender.get()):
                     messagebox.showinfo("Success", "Information on student has been updated!")
                     self.clear_data()
+                    self.rows = []
                     displaytable.display_student_table(self.student_table)
 
     def clear_data(self):

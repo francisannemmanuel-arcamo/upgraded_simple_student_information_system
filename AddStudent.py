@@ -7,9 +7,10 @@ import displaytable
 
 
 class AddStudent:
-    def __init__(self, frame, table):
+    def __init__(self, frame, table, searchentry):
         self.add_student_frame = frame
         self.student_table = table
+        self.searchEntry = searchentry
 
         self.id_no = StringVar()
         self.name = StringVar()
@@ -81,10 +82,9 @@ class AddStudent:
                 return
             else:
                 if SISdatabase.add_student_rec(self.id_no.get(), self.name.get().upper(), self.year.get(),
-                                               self.course.get().upper(), self.gender.get().upper()):
+                                               self.course.get().upper(), self.gender.get()):
                     messagebox.showinfo("Success", "Student added to database")
                     self.clear_data()
                     displaytable.display_student_table(self.student_table)
-                    return
                 else:
                     return

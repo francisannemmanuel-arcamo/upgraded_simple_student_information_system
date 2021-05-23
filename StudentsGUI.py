@@ -126,7 +126,7 @@ class StudentGUI:
         self.heading_label.config(text="  ADD STUDENT")
         self.hide_widgets()
         self.add_student_frame.place(x=10, y=170, width=340, height=370)
-        AddStudent(self.add_student_frame, self.student_table)
+        AddStudent(self.add_student_frame, self.student_table, self.search_student_bar_entry.get())
 
     def edit_student(self):
         self.heading_label.config(text="  EDIT STUDENT")
@@ -145,6 +145,7 @@ class StudentGUI:
                 SISdatabase.delete_student_rec(rows[0])
                 messagebox.showinfo("Success", "Student deleted in database!")
                 disp.display_student_table(self.student_table)
+                self.default_layout()
                 return
             else:
                 return
