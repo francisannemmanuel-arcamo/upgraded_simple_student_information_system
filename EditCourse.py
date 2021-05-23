@@ -23,9 +23,9 @@ class EditCourse:
                                 bg="#A51d23", fg="white")
         course_id_label.place(x=10, y=50, width=80, height=35)
         self.edit_course_id_entry.place(x=90, y=50, width=235, height=35)
-        course_label = Label(self.edit_course_frame, text="COURSE", font=("Bebas Neue", 17),
+        course_label = Label(self.edit_course_frame, text="COURSE NAME", font=("Bebas Neue", 17),
                              bg="#A51d23", fg="white")
-        course_label.place(x=10, y=100, width=80, height=35)
+        course_label.place(x=10, y=100, width=110, height=35)
         self.edit_course_text.place(x=10, y=135, width=315, height=125)
 
         update_info_button = Button(self.edit_course_frame, command=self.update_course, text="UPDATE",
