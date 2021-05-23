@@ -14,11 +14,10 @@ class StudentGUI:
 
         self.search_stud = StringVar()
 
-        self.add_button_img = PhotoImage(file=r"addstudent.png").subsample(1, 1)
-        self.edit_button_img = PhotoImage(file=r"editstudent.png").subsample(1, 1)
-        self.delete_button_img = PhotoImage(file=r"deletestudent.png").subsample(1, 1)
-        self.srch_btn_img = PhotoImage(file=r"searchbuttonimg.png").subsample(1, 1)
-        self.refresh_btn_img = PhotoImage(file=r"refreshbutton.png").subsample(1, 1)
+        self.add_button_img = PhotoImage(file=r"images\addstudent.png").subsample(1, 1)
+        self.edit_button_img = PhotoImage(file=r"images\editstudent.png").subsample(1, 1)
+        self.delete_button_img = PhotoImage(file=r"images\deletestudent.png").subsample(1, 1)
+        self.srch_img = PhotoImage(file=r"images\searchbuttonimg.png").subsample(1, 1)
 
         add_student_btn = Button(self.student_cont_frame, bg="#A51d23", image=self.add_button_img,
                                  command=self.add_student)
@@ -44,8 +43,8 @@ class StudentGUI:
         self.search_student_bar_entry.place(x=595, y=85, width=250, height=35)
         self.search_stud.trace("w", lambda name, index, mode, sv=self.search_stud: self.search_student())
 
-        search_student_lbl = Label(self.student_cont_frame, image=self.srch_btn_img)
-        search_student_lbl.photo = self.srch_btn_img
+        search_student_lbl = Label(self.student_cont_frame, image=self.srch_img)
+        search_student_lbl.photo = self.srch_img
         search_student_lbl.place(x=845, y=85, width=35, height=35)
 
         self.stud_list_label = Label(self.student_cont_frame, bg="#A51d23", fg="white", anchor='w',

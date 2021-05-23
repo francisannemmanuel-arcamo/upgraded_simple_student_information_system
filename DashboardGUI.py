@@ -9,7 +9,7 @@ class DashboardGUI:
     def __init__(self, frame):
         self.dashboard_cont_frame = frame
 
-        self.student_dshbrd_img = PhotoImage(file=r"dashboardstud.png")
+        self.student_dshbrd_img = PhotoImage(file=r"images\dashboardstud.png")
         student_count_dash = Label(self.dashboard_cont_frame, image=self.student_dshbrd_img)
         student_count_dash.photo = self.student_dshbrd_img
         student_count_dash.place(x=20, y=20, width=250, height=120)
@@ -17,7 +17,7 @@ class DashboardGUI:
                                    fg="#A51d23", bg="#FA9412")
         self.student_count.place(x=20, y=20, width=140, height=77)
 
-        self.course_dshbrd_img = PhotoImage(file=r"dashboardcourse.png")
+        self.course_dshbrd_img = PhotoImage(file=r"images\dashboardcourse.png")
         course_count_dash = Label(self.dashboard_cont_frame, image=self.course_dshbrd_img)
         course_count_dash.photo = self.course_dshbrd_img
         course_count_dash.place(x=290, y=20, width=250, height=120)
@@ -79,14 +79,14 @@ class DashboardGUI:
 
         self.course_table.pack(fill=BOTH, expand=1)
 
-        self.max_student_img = PhotoImage(file=r"max.png").subsample(5, 5)
-        self.max_course_img = PhotoImage(file=r"max.png").subsample(5, 5)
+        self.max_student_img = PhotoImage(file=r"images\max.png").subsample(5, 5)
+        self.max_course_img = PhotoImage(file=r"images\max.png").subsample(5, 5)
         self.max_student_button = Button(self.dashboard_cont_frame, command=self.max_student_table, relief=FLAT,
                                          bg="#A51d23", activebackground="#A51d23", image=self.max_student_img)
         self.max_course_button = Button(self.dashboard_cont_frame, command=self.max_course_table, relief=FLAT,
                                         bg="#A51d23", activebackground="#A51d23", image=self.max_course_img)
 
-        self.min_image = PhotoImage(file=r"min.png").subsample(5, 5)
+        self.min_image = PhotoImage(file=r"images\min.png").subsample(5, 5)
         self.min_button = Button(self.dashboard_cont_frame, command=self.default_layout, relief=FLAT,
                                  fg="white", bg="#A51d23", activeforeground="white", activebackground="#A51d23",
                                  image=self.min_image)

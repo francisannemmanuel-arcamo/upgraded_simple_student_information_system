@@ -16,7 +16,7 @@ class SISGUIApp:
         self.frame.title("Student Information System")
         self.frame.geometry("1200x680+63+8")
         self.frame.resizable(False, False)
-        self.frame.iconbitmap('logosis.ico')
+        self.frame.iconbitmap(r"images\logosis.ico")
 
         # background frames
         bg_frame = Frame(self.frame, bg="#A51d23")
@@ -30,15 +30,15 @@ class SISGUIApp:
         self.right_frame = Frame(bg_frame, bg="#FA9412")
         self.right_frame.place(x=266, y=0, width=940, height=680)
 
-        self.SISlogopic = PhotoImage(file=r"sislabellogo.png").subsample(2, 2)
+        self.SISlogopic = PhotoImage(file=r"images\sislabellogo.png").subsample(2, 2)
         icon_pic_lbl = Label(self.nav_frame, image=self.SISlogopic)
         icon_pic_lbl.photo = self.SISlogopic
         icon_pic_lbl.place(x=5, y=10, width=250, height=180)
 
-        self.dashboard_img = PhotoImage(file=r"dashboardimg.png")
-        self.student_img = PhotoImage(file=r"studimg.png")
-        self.course_img = PhotoImage(file=r"courseimg.png")
-        self.about_img = PhotoImage(file=r"aboutimg.png")
+        self.dashboard_img = PhotoImage(file=r"images\dashboardimg.png")
+        self.student_img = PhotoImage(file=r"images\studimg.png")
+        self.course_img = PhotoImage(file=r"images\courseimg.png")
+        self.about_img = PhotoImage(file=r"images\aboutimg.png")
 
         dashbrd_nav_button = Button(self.nav_frame, command=self.dashboard_frame_gui, relief=FLAT,
                                     activebackground="#A51d23", activeforeground="white", fg="#FA9412", bg="#A51d23",
@@ -70,7 +70,7 @@ class SISGUIApp:
         self.about_cont_frame = Frame(self.right_frame, bg="white", highlightbackground="#A51d23",
                                       highlightthickness=2)
 
-        self.head_bldsgn_img = PhotoImage(file=r"label_design.png")
+        self.head_bldsgn_img = PhotoImage(file=r"images\label_design.png")
         self.heading_label = Label(self.right_frame, text="",
                                    bg="#A51d23", fg="white",
                                    anchor="w", font=("Blinker", 20, "bold"))

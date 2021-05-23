@@ -14,11 +14,10 @@ class CoursesGUI:
 
         self.search_course_id = StringVar()
 
-        self.add_button_img = PhotoImage(file=r"addcourse.png").subsample(1, 1)
-        self.edit_button_img = PhotoImage(file=r"editcourse.png").subsample(1, 1)
-        self.delete_button_img = PhotoImage(file=r"deletecourse.png").subsample(1, 1)
-        self.srch_btn_img = PhotoImage(file=r"searchbuttonimg.png").subsample(1, 1)
-        self.refresh_btn_img = PhotoImage(file=r"refreshbutton.png").subsample(1, 1)
+        self.add_button_img = PhotoImage(file=r"images\addcourse.png").subsample(1, 1)
+        self.edit_button_img = PhotoImage(file=r"images\editcourse.png").subsample(1, 1)
+        self.delete_button_img = PhotoImage(file=r"images\deletecourse.png").subsample(1, 1)
+        self.srch_img = PhotoImage(file=r"images\searchbuttonimg.png").subsample(1, 1)
 
         add_course_btn = Button(self.courses_cont_frame, image=self.add_button_img,
                                 bg="#A51d23", command=self.add_course)
@@ -43,8 +42,8 @@ class CoursesGUI:
                                              highlightbackground="#A51d23")
         self.search_course_bar_entry.place(x=595, y=85, width=250, height=35)
         self.search_course_id.trace("w", lambda name, index, mode, sv=self.search_course_id: self.search_course())
-        search_course_lbl = Label(self.courses_cont_frame, image=self.srch_btn_img)
-        search_course_lbl.photo = self.srch_btn_img
+        search_course_lbl = Label(self.courses_cont_frame, image=self.srch_img)
+        search_course_lbl.photo = self.srch_img
         search_course_lbl.place(x=845, y=85, width=35, height=35)
 
         courselist_label = Label(self.courses_cont_frame, bg="#A51d23", fg="white",
