@@ -85,8 +85,8 @@ class EditStudent:
                                                   self.year.get(), self.course.get().upper(),
                                                   self.gender.get().upper()):
                     messagebox.showinfo("Success", "Information on student has been updated!")
-                    displaytable.display_student_table(self.student_table)
                     self.clear_data()
+                    displaytable.display_student_table(self.student_table)
 
     def clear_data(self):
         self.edit_id_entry.delete(0, END)

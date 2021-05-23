@@ -49,8 +49,8 @@ class AddCourse:
             if messagebox.askyesno("Add Course", "Do you wish to add the course to database?"):
                 if SISdatabase.add_course_rec(self.course_id.get().upper(),
                                               self.add_course_text.get(1.0, END).upper().replace("\n", "")):
-                    self.clear_data()
                     messagebox.showinfo("Success", "Course added to database.")
+                    self.clear_data()
                     displaytable.display_course_table(self.course_table)
                 else:
                     return

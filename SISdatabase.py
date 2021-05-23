@@ -123,7 +123,7 @@ def update_course_rec(key, course_id, course_name):
 def search_student_rec(student_id):
     con = sqlite3.connect("csc.db")
     cur = con.cursor()
-    cur.execute("SELECT * FROM studentdata WHERE stud_id=?", (student_id,))
+    cur.execute("SELECT * FROM studentdata WHERE stud_id LIKE ?", ('%'+student_id+'%',))
     result = cur.fetchall()
     con.close()
     return result
@@ -132,7 +132,7 @@ def search_student_rec(student_id):
 def search_course_rec(course_id):
     con = sqlite3.connect("csc.db")
     cur = con.cursor()
-    cur.execute("SELECT * FROM coursedata WHERE course_id=?", (course_id,))
+    cur.execute("SELECT * FROM coursedata WHERE course_id LIKE ?", ('%'+course_id+'%',))
     result = cur.fetchall()
     con.close()
     return result

@@ -49,8 +49,8 @@ class EditCourse:
                 if SISdatabase.update_course_rec(self.rows[0], self.course_id.get().upper(),
                                                  self.edit_course_text.get(1.0, END).upper().replace("\n", "")):
                     messagebox.showinfo("Success", "Information on course has been updated!")
-                    disp.display_course_table(self.course_table)
                     self.clear_data()
+                    disp.display_course_table(self.course_table)
                 return
             else:
                 return

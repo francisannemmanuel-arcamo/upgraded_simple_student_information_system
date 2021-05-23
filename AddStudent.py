@@ -82,8 +82,8 @@ class AddStudent:
             else:
                 if SISdatabase.add_student_rec(self.id_no.get(), self.name.get().upper(), self.year.get(),
                                                self.course.get().upper(), self.gender.get().upper()):
-                    self.clear_data()
                     messagebox.showinfo("Success", "Student added to database")
+                    self.clear_data()
                     displaytable.display_student_table(self.student_table)
                     return
                 else:
