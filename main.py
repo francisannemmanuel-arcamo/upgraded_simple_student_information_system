@@ -10,7 +10,7 @@ import SISdatabase
 class SISGUIApp:
     def __init__(self, frame):
         # creates database table for students and courses
-        SISdatabase.course_data()
+        SISdatabase.data()
 
         self.frame = frame
         self.frame.title("Student Information System")

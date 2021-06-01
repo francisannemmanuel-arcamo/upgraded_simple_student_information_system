@@ -2,8 +2,7 @@ from tkinter import messagebox
 import sqlite3
 
 
-def course_data():
-    # course data
+def data():
     con = sqlite3.connect("csc.db")
     con.execute("PRAGMA foreign_keys = 1")
     cur = con.cursor()

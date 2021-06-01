@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:sqlite:D:\2nd YEAR\2nd Sem\CSC151 - Database Systems\upgraded_simple_student_information_system\csc.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="csc [2]" uuid="bc99dfda-24c8-48f3-89b1-0391aa8f12e9">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:D:\2nd YEAR\2nd Sem\CSC151 - Database Systems\projects\upgraded_simple_student_information_system\csc.db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
